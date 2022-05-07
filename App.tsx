@@ -1,5 +1,5 @@
 import React from 'react';
-import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
 import Widget from './src/components/Widget';
 import 'react-native-gesture-handler';
 
@@ -14,19 +14,29 @@ import {
 import { theme } from './src/theme';
 
 export default function App() {
+  SplashScreen.preventAutoHideAsync();
+
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
   });
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return null;
   }
 
+  SplashScreen.hideAsync();
+
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <StatusBar style="light" backgroundColor="transparent" translucent />
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme.colors.background,
+      }}
+    >
       <Widget />
+
+      <StatusBar style="light" backgroundColor="transparent" translucent />
     </View>
   );
 }
